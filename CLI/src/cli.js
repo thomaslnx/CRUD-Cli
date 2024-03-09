@@ -1,8 +1,10 @@
 import cors from 'cors'
 import express from 'express'
-import axios from 'axios'
 
 import readline from 'readline'
+
+import { getIssues } from './commands/getIssues.js'
+import { createIssue } from './commands/createIssue.js'
 
 const server = express()
 server.use(express.json())
@@ -27,6 +29,19 @@ try {
         getIssues()
         cli.prompt()
       break;
+
+      case 'createIssue':
+        let title
+        let description 
+        cli.question('Type a title: ', (answer) => {
+          title = answer
+          cli.question('Type a description: ', (answer) => {
+            description = answer
+            createIssue({ title, description })
+            cli.prompt()
+          })
+        })
+      break;
     }
     cli.prompt()
   })
@@ -39,11 +54,6 @@ try {
   } else {
     console.log(error.message)
   }
-}
-
-const getIssues = async () => {
-  const getIssues = await axios.get(`${baseURL}/issues`)
-  console.log(getIssues.data)
 }
 
 server.listen(port, () => console.log(`Server up and running at port ${port}`))
