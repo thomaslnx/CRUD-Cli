@@ -6,6 +6,7 @@ import readline from 'readline'
 import { getIssues } from './commands/getIssues.js'
 import { createIssue } from './commands/createIssue.js'
 import { updateIssue } from './commands/updateIssue.js'
+import { deleteIssue } from './commands/deleteIssue.js'
 
 const server = express()
 server.use(express.json())
@@ -62,6 +63,18 @@ try {
         })
 
       break;
+
+      case 'deleteIssue':
+        let idToDelete
+
+        cli.question('Type the id from the issue you wanna delete: ', (answer) => {
+          idToDelete = answer
+
+          deleteIssue(idToDelete)
+          cli.prompt()
+        })
+      break;
+
     }
     cli.prompt()
   })
