@@ -5,6 +5,7 @@ import readline from 'readline'
 
 import { getIssues } from './commands/getIssues.js'
 import { createIssue } from './commands/createIssue.js'
+import { updateIssue } from './commands/updateIssue.js'
 
 const server = express()
 server.use(express.json())
@@ -41,6 +42,25 @@ try {
             cli.prompt()
           })
         })
+      break;
+
+      case 'updateIssue':
+        let id
+        let updatedTitle
+        let updatedDescription
+        cli.question('Type the issue id: ', (answer) => {
+          id = answer
+          cli.question('Type a new title or leave it blank: ', (answer) => {
+            answer.length > 0 ? updatedTitle = answer : updatedTitle = ''
+            cli.question('Type a new description or leave it blank: ', (answer) => {
+              answer.length > 0 ? updatedDescription = answer : updatedDescription = ''
+
+              updateIssue({ id, updatedTitle, updatedDescription })
+              cli.prompt()
+            })
+          })
+        })
+
       break;
     }
     cli.prompt()
