@@ -22,4 +22,11 @@ server.get('/issues', (req: Request, res: Response) => {
   return res.json(exampleIssues)
 })
 
+server.post('/issues', (req: Request, res: Response) => {
+  const newIssue = { id: Date.now(), ...req.body }
+  exampleIssues.push(newIssue)
+
+  return res.status(201).json(newIssue)
+})
+
 server.listen(3000, () => console.log('Server up and running!'))
