@@ -29,4 +29,22 @@ server.post('/issues', (req: Request, res: Response) => {
   return res.status(201).json(newIssue)
 })
 
+server.put('/issue/:id', (req: Request, res: Response) => {
+  const { updatedTitle, updatedDescription } = req.body
+  console.log('req.body', req.body)
+  console.log('description: ', updatedDescription)
+  const issue = exampleIssues.filter(issue => {
+    if (issue.id === parseInt(req.params.id)) {
+      updatedTitle !== undefined ? issue.title = updatedTitle : null
+      updatedDescription !== undefined ? issue.description = updatedDescription : null
+
+      return res.status(200).json(issue)
+    }
+  })
+
+  if (!issue) {
+    return res.status(404).send("The issue you're looking for doesn't exist!")
+  }
+})
+
 server.listen(3000, () => console.log('Server up and running!'))
