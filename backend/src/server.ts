@@ -47,4 +47,13 @@ server.put('/issue/:id', (req: Request, res: Response) => {
   }
 })
 
+server.delete('/issue/:id', (req: Request, res: Response) => {
+  const issue = exampleIssues.find((issue, issueIndex) => {
+    if (issue.id === parseInt(req.params.id)) {
+      exampleIssues.splice(issueIndex, 1)
+      return res.json(issue)
+    }
+  })
+})
+
 server.listen(3000, () => console.log('Server up and running!'))
