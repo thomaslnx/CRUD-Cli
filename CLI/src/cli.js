@@ -3,10 +3,7 @@ import express from 'express'
 
 import readline from 'readline'
 
-import { getIssues } from './commands/getIssues.js'
-import { createIssue } from './commands/createIssue.js'
-import { updateIssue } from './commands/updateIssue.js'
-import { deleteIssue } from './commands/deleteIssue.js'
+import { getIssues, createIssue, updateIssue, deleteIssue } from './commands/index.js'
 
 const server = express()
 server.use(express.json())
